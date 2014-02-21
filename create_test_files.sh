@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./settings.sh
+. settings.sh
 
 WRITEDIR=`pwd`/input_files
 IF=/dev/zero
