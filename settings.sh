@@ -16,10 +16,10 @@ USER=
 PASSWD=
 
 #Testfile size in KB
-TESTFILE_SIZE_KB=
+TESTFILE_SIZE_KB=10
 
 # Number of files (not nessecerily same as number of transfers)
-FILES=10000
+FILES=63
 
 #The stuff below you can leave as is.
 #----------------------------------------------------
