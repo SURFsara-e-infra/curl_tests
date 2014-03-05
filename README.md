@@ -44,3 +44,4 @@ Usage
 4. After a while run result.py and monitor the throughputs. 
 If the result does not change significantly anymore, then proceed with 5
 5. Run test_abort.sh to stop the test.
+6. Run result.py to get the final results.
