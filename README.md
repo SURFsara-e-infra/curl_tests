@@ -20,7 +20,7 @@ transfer rate will be printed.
 Scripts
 -------
 
-prepare_tests.sh: Prepares the test environment.
+prepare_test.sh: Prepares the test environment.
 
 settings.sh: A necessary input needs to be specified here like:
 remote server, username, password, protocol, storage path on the remote host, file size in KB, number of transfers, number of test files, number of 
