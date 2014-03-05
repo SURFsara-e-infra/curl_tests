@@ -1,11 +1,15 @@
 #!/bin/bash
 
-. settings.sh
+anywait(){
 
-# Total number of transfers is not necesserily the same as the number of files.
-TRANSFERS=10000
-WRITES=1
-READS=10
+    for pid in "$@"; do
+        while kill -0 "$pid"; do
+            sleep 0.5
+        done
+    done
+}
+
+. settings.sh
 
 rm -f test_results*.txt
 
@@ -17,7 +21,9 @@ for i in `seq 1 $WRITES` ; do
   ./test_child.sh write $TRANSFERS > test_results_write-$i.txt &
 done
 
-wait
+anywait
+
+./test_abort.sh
 
 echo "All child processes have been terminated. Now calculating throughput..."
 ./result.py
