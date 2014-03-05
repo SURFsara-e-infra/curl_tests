@@ -3,7 +3,7 @@
 # Load a bunch of variables
 . settings.sh
 
-# How many transfers should we do? Again, test_start.sh will tell us.
+# How many transfers should we do? test_start.sh will tell us.
 TRANSFERS=$2
 
 usage () {
