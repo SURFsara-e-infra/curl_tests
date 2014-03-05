@@ -91,12 +91,3 @@ fi
 if [ $error -ne 0 ]; then
     exit 1
 fi
-
-get_last_line () {
-  tail -n 1 $1
-}
-
-kill_child_procs () {
-  echo "One child has finished. Terminating all other child procs..." 1>&2
-  killall -9 test_child.sh
-}
