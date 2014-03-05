@@ -3,23 +3,22 @@
 # Load a bunch of variables
 . settings.sh
 
-# How many transfers should we do? test_start.sh will tell us.
-TRANSFERS=$2
-
 usage () {
   echo "This script is supposed to be called from test_start.sh."
   echo "Usage:"
-  echo "$0 <read|write> <repetitions>"
+  echo "$0 <read|write>"
   exit
 }
 
 timer_start () {
   START=`python -c "import time; print time.time()"`
+  echo $START
 }
 
 timer_stop () {
+  START=$1
   STOP=`python -c "import time; print time.time()"`
-  python -c "print str($TESTFILE_SIZE_KB*$i/1024.0)+' MB; '+str($STOP-$START)+' sec; Throughput: '+str($TESTFILE_SIZE_KB*$i/(($STOP-$START)*1024.0))+' MB/s.'"
+  python -c "print 'time:'+str($STOP)+';'+str($TESTFILE_SIZE_KB/1024.0)+' MB; '+str($STOP-$START)+' sec; Throughput: '+str($TESTFILE_SIZE_KB/(($STOP-$START)*1024.0))+' MB/s.'"
 }
 
 get_random_file_number () {
@@ -35,41 +34,33 @@ get_random_file_number () {
 
 test_read () {
   # Client read test (= server write, but we are testing the client)
-  timer_start
-  for i in `seq 1 $TRANSFERS` ; do
+  while true; do
     NUMBER=`get_random_file_number $FILES`
 
+    START=`timer_start`
     curl -s -S -k --user $USER:$PASSWD -L ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/readtestfiles${TESTFILE_SIZE_KB}/testfile_${TESTFILE_SIZE_KB}_${NUMBER} -o /dev/null
-    # In the loop because this child may get killed and we want the last values.
-    timer_stop
+    timer_stop $START
   done
-  # The first child process that has finished with all files, will kill 
-  # all other child processes.
-  echo "One child has finished. Terminating all other child procs..." 1>&2
-  kill_child_procs
 }
 
 test_write () {
   # Client write test
-  timer_start
-  for i in `seq 1 $TRANSFERS` ; do
+  i=1
+  while true; do
     j=`expr $i % $FILES`
+    START=`timer_start`
     curl -s -S -k --user $USER:$PASSWD -T $WRITEDIR/file${TESTFILE_SIZE_KB} ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/writetestfiles${TESTFILE_SIZE_KB} 
-    # In the loop because this child may get killed and we want the last values.
-    timer_stop
+    timer_stop $START
+    i=`expr $i + 1`
   done
-  # The	first child process that has finished with all files, will kill	
-  # all	other child processes.                                                        
-  echo "One child has finished. Terminating all other child procs..." 1>&2
-  kill_child_procs
 }
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 1 ]; then
   usage
   exit 1
 fi
 
-test=$2
+test=$1
 case $test in
   "read" )
        test_read

@@ -63,7 +63,7 @@ def results(transfer):
     ntransfers,avg,mntime,mxtime,sz=get_info(files)
 
     elapsedtime=int(mxtime-mntime)
-    if elapsedtime<0:
+    if elapsedtime<=0:
         print "There were no "+transfer+"s"
     else:
         print "Average "+transfer+" speed:"+str(avg)+" MB/s"

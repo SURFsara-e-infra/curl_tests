@@ -21,9 +21,6 @@ TESTFILE_SIZE_KB=102400
 # Number of files (not nessecerily same as number of transfers)
 FILES=100000
 
-# Total number of transfers (not necesserily the same as the number of files)
-TRANSFERS=10000
-
 # The number of concurrent writes during the tests
 # Can be 0 or greater
 WRITES=1
