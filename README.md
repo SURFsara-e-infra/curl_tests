@@ -20,7 +20,8 @@ transfer rate will be printed.
 Scripts
 -------
 
-prepare_test.sh: Prepares the test environment.
+prepare_test.sh: Prepares the test environment. It creates the directories on the remote 
+server and the files that are going to be used during the read test.
 
 settings.sh: A necessary input needs to be specified here like:
 remote server, username, password, protocol, storage path on the remote host, file size in KB, number of transfers, number of test files, number of 
@@ -40,7 +41,6 @@ Usage
 1. Fill in the necessary values in settings.sh
 2. Start prepare_tests.sh
 3. Run test_start.sh
-
-After test_start.sh finishes. The result is automatically printed. It is always a possibility when things take too long
-to run test_abort.sh followed by result.py by hand.
-
+4. After a while run result.py and monitor the throughputs. 
+If the result does not change significantly anymore, then proceed with 5
+5. Run test_abort.sh to stop the test.
