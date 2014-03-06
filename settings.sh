@@ -70,11 +70,6 @@ if [ -z ${TESTFILE_SIZE_KB} ]; then
     error=1
 fi
 
-if [ -z ${TRANSFERS} ]; then
-    echo "Please specify TRANSFERS in settings.sh"
-    error=1
-fi
-
 if [ -z ${READS} ]; then
     echo "Please specify READS in settings.sh"
     error=1
