@@ -33,12 +33,12 @@ get_random_file_number () {
 }
 
 test_read () {
-  # Client read test (= server write, but we are testing the client)
+  # Client read test
   while true; do
     NUMBER=`get_random_file_number $FILES`
 
     START=`timer_start`
-    curl -s -S -k --user $USER:$PASSWD -L ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/readtestfiles${TESTFILE_SIZE_KB}/testfile_${TESTFILE_SIZE_KB}_${NUMBER} -o /dev/null
+    curl -s -S -k --user $USER:$PASSWD -H "Expect:" -L ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/readtestfiles${TESTFILE_SIZE_KB}/testfile_${TESTFILE_SIZE_KB}_${NUMBER} -o /dev/null
     timer_stop $START
   done
 }
@@ -49,7 +49,7 @@ test_write () {
   while true; do
     j=`expr $i % $FILES`
     START=`timer_start`
-    curl -s -S -k --user $USER:$PASSWD -T $WRITEDIR/file${TESTFILE_SIZE_KB} ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/writetestfiles${TESTFILE_SIZE_KB} 
+    curl -s -S -k --user $USER:$PASSWD -T $WRITEDIR/file${TESTFILE_SIZE_KB} -H "Expect:" -L ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/writetestfiles${TESTFILE_SIZE_KB}/testfile_${TESTFILE_SIZE_KB}_${j}
     timer_stop $START
     i=`expr $i + 1`
   done
