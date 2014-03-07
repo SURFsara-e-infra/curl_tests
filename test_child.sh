@@ -47,7 +47,8 @@ test_write () {
   # Client write test
   i=1
   while true; do
-    j=`expr $i % $FILES`
+#    j=`expr $i % $FILES`
+    j=`uuid`
     START=`timer_start`
     curl -s -S -k --user $USER:$PASSWD -T $WRITEDIR/file${TESTFILE_SIZE_KB} -H "Expect:" -L ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/writetestfiles${TESTFILE_SIZE_KB}/testfile_${TESTFILE_SIZE_KB}_${j}
     timer_stop $START
