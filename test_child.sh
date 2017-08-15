@@ -49,8 +49,7 @@ test_write () {
   curl -s -S -k --user $USER:$PASSWD -X MKCOL ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/${DIR} >/dev/null 2>&1
   i=1
   while true; do
-#    j=`expr $i % $FILES`
-    j=`uuid`
+    j=`expr $i % $FILES`
     START=`timer_start`
     curl -s -S -k --user $USER:$PASSWD -T $WRITEDIR/file${TESTFILE_SIZE_KB} -L ${PROTOCOL}://${REMOTE_SERVER}/${STORAGE_PATH}/${DIR}/testfile_${TESTFILE_SIZE_KB}_${j}
     timer_stop $START
